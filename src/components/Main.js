@@ -3,38 +3,59 @@ require('styles/App.css');
 
 import React from 'react';
 
-//获取图片数据
-var imageDatas=require('../data/imageDatas.json');
-//利用自执行函数，将图片名信息转成图片URL路径信息
-imageDatas=(function genImageURL(imageDatasArr){
-	for (var i = 0; i < imageDatasArr.length; i++) {
-		var singleImageData=imageDatasArr[i];
-		singleImageData.imageURL=require('../images/'+singleImageData.fileName);
+// let yeomanImage = require('../images/yeoman.png');
 
-		imageDatasArr[i]=singleImageData;
-	}
-	return imageDatasArr;
+//获取图片相关的数据
+let imageDatas = require('json!../data/imageDatas.json');
+//利用自执行函数，将图片名信息转成图片URL路径信息
+imageDatas = ((imageDatasArr) => {
+  for (var i = 0, j = imageDatasArr.length; i < j; i++) {
+    let singleImageData = imageDatasArr[i];
+    singleImageData.imageURL = require('../images/' + singleImageData.fileName);
+    imageDatasArr[i] = singleImageData;
+  }
+  return imageDatasArr;
 })(imageDatas);
 
-// let yeomanImage = require('../images/yeoman.png');
+var ImgFigure=React.createClass({
+  render(){
+    return(
+      <figure>
+      <img src={this.props.data.imageURL}
+      alt={this.props.data.title}
+      />
+      <figcaption>
+      <h2>{this.props.data.title}</h2>
+      </figcaption>
+      </figure>
+      );
+  }
+});
+
 class AppComponent extends React.Component {
   render() {
+
+      var controllerUnits=[],
+      ImgFigures=[];
+
+      imageDatas.forEach(function(value){
+        ImgFigures.push(<ImgFigure data={value}/>);
+      });
+
     return (
-      // <div className="index">
-      //   <img src={yeomanImage} alt="Yeoman Generator" />
-      //   <div className="notice">Please edit <code>src/components/Main.js</code> to get started!</div>
-      // </div>
       <section className="stage">
-      	<section className="img-sec">
-      	</section>
-      	<nav className="controller-nav">
-      	</nav>
+      <section className="img-sec">
+      {ImgFigures}
       </section>
-    );
-  }
-}
+      <nav className="controller-nav">
+      {controllerUnits}
+      </nav>
+      </section>
+      );
+      }
+    }
 
-AppComponent.defaultProps = {
-};
+    AppComponent.defaultProps = {
+    };
 
-export default AppComponent;
+    export default AppComponent;
