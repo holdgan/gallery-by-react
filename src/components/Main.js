@@ -83,7 +83,7 @@ class AppComponent extends React.Component {
     topImgSpliceIndex=0,
     imgsArrCenterArr=imgsArrangeArr.splice(centerIndex,1);
 //首先居中centerIndex的图片
-imgsArrCenterArr[0].pos=centerPos;
+imgsArrCenterArr[0]={pos:centerPos}
 //取出布局上侧图片的状态信息
 topImgSpliceIndex=Math.ceil(Math.random()*(imgsArrangeArr.length-topImgNum));
 imgsArrangeTopArr=imgsArrangeArr.splice(topImgSpliceIndex,topImgNum);
@@ -130,13 +130,13 @@ componentDidMount(){
   stageW=stageDOM.scrollWidth,
   stageH=stageDOM.scrollHeight,
   halfStageW=Math.ceil(stageW/2),
-  halfStageH=Math.ceil(stageH/2)
+  halfStageH=Math.ceil(stageH/2);
 //imgFigure大小
-var imgFigureDOM=ReactDOM.findDOMNode(this.refs.ImgFigure0), 
-imgW=stageDOM.scrollWidth,
-imgH=stageDOM.scrollHeight,
+var imgFigureDOM=ReactDOM.findDOMNode(this.refs.imgFigure0), 
+imgW=imgFigureDOM.scrollWidth,
+imgH=imgFigureDOM.scrollHeight,
 halfImgW=Math.ceil(imgW/2),
-halfImgH=Math.ceil(imgH/2)
+halfImgH=Math.ceil(imgH/2);
 //计算中心图片的位置点
 this.Constant.centerPos={
   left:halfStageW-halfImgW,
@@ -178,7 +178,7 @@ this.Constant.centerPos={
         };
       }
 
-      imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigures' + index} arrange={this.state.imgsArrangeArr[index]} />);
+      imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArr[index]} />);
 
     }.bind(this));
 
